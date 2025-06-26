@@ -1,0 +1,352 @@
+﻿@model IEnumerable<LiseWoreEmp.Models.ViewModel.EmployeeViewModel>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Employee List";
+}
+
+<style>
+    .employee-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem 0;
+        margin: -1rem -15px 2rem -15px;
+        border-radius: 0 0 15px 15px;
+    }
+
+    .stats-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 1.5rem;
+        text-align: center;
+        border-left: 4px solid #667eea;
+    }
+
+    .stats-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #667eea;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .table-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 1.5rem;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .search-box {
+        border-radius: 25px;
+        border: 2px solid #e9ecef;
+        padding: 0.75rem 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+        .search-box:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+    .btn-add {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 25px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+        .table thead th {
+            background: linear-gradient(135deg, #495057 0%, #6c757d 100%);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            border: none;
+            padding: 1rem 0.75rem;
+        }
+
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+            .table tbody tr:hover {
+                background-color: #f8f9fa;
+                transform: scale(1.01);
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+        .table tbody td {
+            padding: 1rem 0.75rem;
+            vertical-align: middle;
+            border-color: #e9ecef;
+        }
+
+    .employee-name {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .department-badge {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .position-text {
+        color: #6c757d;
+        font-style: italic;
+    }
+
+    .action-btn {
+        border-radius: 8px;
+        padding: 0.5rem 0.75rem;
+        margin: 0 0.1rem;
+        transition: all 0.3s ease;
+        border: none;
+        font-weight: 500;
+    }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+    .btn-view {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+        color: #212529;
+    }
+
+    .btn-delete {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 3rem;
+        color: #6c757d;
+    }
+
+        .no-data i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+    .employee-index {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        margin: 0 auto;
+    }
+
+    .filter-section {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<div class="container-fluid">
+    <!-- Header Section -->
+    <div class="employee-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="mb-2">
+                        <i class="fas fa-users me-3"></i>
+                        Employee Management
+                    </h1>
+                    <p class="mb-0 opacity-75">Manage and organize your workforce efficiently</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="stats-card d-inline-block">
+                        <div class="stats-number">@ViewBag.TotalEmployees</div>
+                        <div class="text-muted">Total Employees</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="container">
+        
+        <div class="table-container">
+           
+            <div class="table-header">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h4 class="mb-0">
+                            <i class="fas fa-list me-2 text-primary"></i>
+                            Employee Directory
+                        </h4>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex gap-2 justify-content-md-end mt-3 mt-md-0">
+                            
+                            <a asp-action="AddEmployee" asp-controller="Employee" class="btn btn-add text-white">
+                                <i class="fas fa-plus me-2"></i>
+                                Add Employee
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <!-- Employee Table -->
+            <div class="table-responsive">
+                <table class="table table-hover" id="employeeTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">#</th>
+                            <th>Employee Name</th>
+                            <th>Department</th>
+                            <th>Position</th>
+                            <th>Email Address</th>
+                            <th style="width: 150px;" class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            int index = 1;
+                            foreach (var emp in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="employee-index">@index</div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-circle me-3">
+                                                <i class="fas fa-user-circle fa-2x text-secondary"></i>
+                                            </div>
+                                            <div>
+                                                <div class="employee-name">
+                                                    @emp.FirstName
+                                                    @if (!string.IsNullOrEmpty(emp.MiddleName))
+                                                    {
+                                                        @emp.MiddleName.Substring(0, 2)
+                                                    }
+                                                    @emp.LastName
+                                                </div>
+                                                <small class="text-muted">ID:@emp.EmployeeId</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="department-badge">@emp.Department</span>
+                                    </td>
+                                    <td>
+                                        <span class="position-text">@emp.Position</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-envelope me-2 text-muted"></i>
+                                            <a href="mailto:@emp.Email" class="text-decoration-none">@emp.Email</a>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="EmployeeDetails" asp-controller="Employee" asp-route-empEncId="@emp.EmpEncId"
+                                               class="btn btn-sm action-btn btn-view"
+                                               title="View Details"
+                                               data-bs-toggle="tooltip">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a asp-action="Edit" asp-route-id="@emp.EmpEncId"
+                                               class="btn btn-sm action-btn btn-edit"
+                                               title="Edit Employee"
+                                               data-bs-toggle="tooltip">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@emp.EmpEncId"
+                                               class="btn btn-sm action-btn btn-delete"
+                                               title="Delete Employee"
+                                               data-bs-toggle="tooltip"
+                                               onclick="return confirm('Are you sure you want to delete this employee?');">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                index++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="no-data">
+                                    <i class="fas fa-users-slash"></i>
+                                    <h5>No Employees Found</h5>
+                                    <p class="text-muted">There are currently no employees in the system.</p>
+                                    
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+     // Toastr configuration
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    $(document).ready(function () {
+        @if (TempData["AddSuccess"] != null)
+        {
+           <text>toastr.success('@TempData["AddSuccess"]', 'Add Success');</text>
+        }
+        
+    });
+</script>

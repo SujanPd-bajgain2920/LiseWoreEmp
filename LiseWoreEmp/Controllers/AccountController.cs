@@ -14,13 +14,12 @@ namespace LiseWoreEmp.Controllers
     {
 
         private readonly LiseWoreEmpContext _context;
-        private readonly IWebHostEnvironment _env;
+        
         private readonly IDataProtector _protector;
 
-        public AccountController(LiseWoreEmpContext context, IWebHostEnvironment env, DataSecurityProvider key, IDataProtectionProvider provider)
+        public AccountController(LiseWoreEmpContext context, DataSecurityProvider key, IDataProtectionProvider provider)
         {
             _context = context;
-            _env = env;
             _protector = provider.CreateProtector(key.Key);
         }
 

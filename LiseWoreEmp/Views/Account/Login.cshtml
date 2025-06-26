@@ -1,0 +1,105 @@
+﻿@model LiseWoreEmp.Models.ViewModel.UserListViewModel
+@{
+    Layout = null;
+}
+
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/LiseWoreEmp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+<body>
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh; padding-top: 6rem;">
+        <div class="card shadow-lg rounded-4" style="max-width: 400px; width: 100%; margin-top: 2rem;">
+            <!-- Header with gradient -->
+            <div class="card-header text-center text-white" style="background: linear-gradient(to right, #7c3aed, #3b82f6); padding: 1.5rem;">
+                <div class="d-inline-flex p-2 rounded-circle mb-2" style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(4px);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" viewBox="0 0 24 24">
+                        <path stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </div>
+                <h1 class="h4 fw-bold mb-0">Sign In to Your Account</h1>
+                <small class="d-block">Access your dashboard</small>
+            </div>
+
+            <div class="card-body p-4">
+                <form asp-action="Login" asp-controller="Account" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+                    @Html.AntiForgeryToken()
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label asp-for="EmailAddress" class="form-label">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" viewBox="0 0 20 20">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                </svg>
+                            </span>
+                            <input asp-for="EmailAddress" type="email" class="form-control" required />
+                        </div>
+                        <span asp-validation-for="EmailAddress" class="small text-danger"></span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label asp-for="UserPassword" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                            <input asp-for="UserPassword" type="password" class="form-control" required />
+                        </div>
+                        <span asp-validation-for="UserPassword" class="small text-danger"></span>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="d-grid mt-3">
+                        <button type="submit" class="btn text-white" style="background: linear-gradient(to right, #7c3aed, #3b82f6);">
+                            Sign In
+                        </button>
+                    </div>
+
+                    <div class="text-center small text-muted mt-3">
+                        Don't have an account?
+                        <a asp-action="Register" class="text-decoration-none text-primary">Create one</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        // Toastr configuration
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        // Display toastr messages
+        $(document).ready(function () {
+            @if (TempData["LoginError"] != null)
+            {
+                    <text>
+                    toastr.error('@TempData["LoginError"]', 'Login Error');
+                    </text>
+            }
+        });
+    </script>
+</body>

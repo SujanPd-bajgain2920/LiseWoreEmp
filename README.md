@@ -50,7 +50,7 @@ Update your connection string:
    - Open the Package Manager Console in Visual Studio.
    - Run the following command to scaffold the database context and entity models from your existing database:
      ```
-     Scaffold-DbContext -Connection "name=con" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
+     Scaffold-DbContext -Connection "name=con" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -f
      ```
    - This command generates the entity classes and DbContext in the `Models` folder.
    - after this: write this in program.cs

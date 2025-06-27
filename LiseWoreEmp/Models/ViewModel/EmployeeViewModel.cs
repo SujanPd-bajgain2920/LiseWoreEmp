@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LiseWoreEmp.Models.ViewModel
 {
     public class EmployeeViewModel
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public short EmployeeId { get; set; }
 
         public string FirstName { get; set; } = null!;

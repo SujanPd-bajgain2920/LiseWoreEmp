@@ -41,18 +41,10 @@ namespace LiseWoreEmp.Controllers
                     TempData["RegisterError"] = "User already exist with this email!";
                     return View(u);
                 }
-                
-                    short maxid;
-                    if (_context.UserLists.Any())
-                        maxid = Convert.ToInt16(_context.UserLists.Max(x => x.UserId) + 1);
-                    else
-                        maxid = 1;
-                    u.UserId = maxid;
-
 
                     UserList userList = new()
                     {
-                        UserId = u.UserId,
+                       
                         EmailAddress = u.EmailAddress,
                         UserPassword = _protector.Protect(u.UserPassword)
                     };
@@ -62,8 +54,6 @@ namespace LiseWoreEmp.Controllers
                     _context.SaveChanges();
 
                     return RedirectToAction("Login", "Account");
-
-                
      
             }
             catch

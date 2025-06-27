@@ -67,17 +67,11 @@ namespace LiseWoreEmp.Controllers
                     return View(em);
                 }
 
-                // Generate Employee ID
-                short maxid;
-                if (_context.Employees.Any())
-                    maxid = Convert.ToInt16(_context.Employees.Max(e => e.EmployeeId) + 1);
-                else
-                    maxid = 1;
-                em.EmployeeId = maxid;
+               
 
                 Employee employee = new()
                 {
-                    EmployeeId = em.EmployeeId,
+                    
                     FirstName = em.FirstName,
                     MiddleName = em.MiddleName,
                     LastName = em.LastName,

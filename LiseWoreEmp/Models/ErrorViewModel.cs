@@ -1,4 +1,4 @@
-namespace LiseWoreEmp.Models
+﻿namespace LiseWoreEmp.Models
 {
     public class ErrorViewModel
     {

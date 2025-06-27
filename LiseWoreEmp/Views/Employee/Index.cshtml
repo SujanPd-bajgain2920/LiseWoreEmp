@@ -351,6 +351,14 @@
         
     });
 
+    $(document).ready(function () {
+        @if (TempData["EditSuccess"] != null)
+        {
+               <text>toastr.success('@TempData["EditSuccess"]', 'Change Success');</text>
+        }
+
+    });
+
      $(document).ready(function () {
         @if (TempData["DeleteMessage"] != null)
         {

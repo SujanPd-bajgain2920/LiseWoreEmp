@@ -168,28 +168,11 @@
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
                         <!-- Main Navigation -->
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center" asp-action="Index" asp-controller="Home">
-                                    <i class="bi bi-house-door me-2"></i>
-                                    Dashboard
-                                </a>
-                            </li>
+                           
                             <li class="nav-item">
                                 <a class="nav-link d-flex align-items-center" asp-action="Index" asp-controller="Employee">
                                     <i class="bi bi-people me-2"></i>
                                     Employees
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center" href="#">
-                                    <i class="bi bi-calendar-event me-2"></i>
-                                    Schedule
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center" href="#">
-                                    <i class="bi bi-graph-up me-2"></i>
-                                    Reports
                                 </a>
                             </li>
                         </ul>
@@ -210,25 +193,7 @@
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" asp-action="Dashboard" asp-controller="Account">
-                                            <i class="bi bi-speedometer2 text-primary"></i>
-                                            Dashboard
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" asp-action="Settings" asp-controller="Account">
-                                            <i class="bi bi-gear text-secondary"></i>
-                                            Settings
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" asp-action="Earnings" asp-controller="Account">
-                                            <i class="bi bi-currency-dollar text-success"></i>
-                                            Earnings
-                                        </a>
-                                    </li>
-                                    <li><hr class="dropdown-divider" /></li>
+                                   
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center text-danger" asp-action="Logout" asp-controller="Account">
                                             <i class="bi bi-box-arrow-right"></i>
@@ -249,7 +214,7 @@
             </main>
         </div>
 
-       @*  <footer class="footer text-muted mt-5">
+@*         <footer class="footer text-muted mt-5">
             <div class="container-fluid px-4">
                 <div class="row align-items-center">
                     <div class="col-md-6">

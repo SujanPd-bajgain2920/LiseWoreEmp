@@ -42,7 +42,6 @@ namespace LiseWoreEmp.Controllers
         }
 
         [HttpGet]
-
         public IActionResult AddEmployee()
         {
             return View();
@@ -104,6 +103,103 @@ namespace LiseWoreEmp.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult EditEmployee(string empEncId)
+        {
+
+            //return Json(empEncId);
+            var empId = Convert.ToInt16(_protector.Unprotect(empEncId));
+            var employee = _context.Employees
+                .Where(e => e.EmployeeId == empId)
+                .Select(e => new EmployeeViewModel
+                {
+                    EmployeeId = e.EmployeeId,
+                    FirstName = e.FirstName,
+                    MiddleName = e.MiddleName,
+                    LastName = e.LastName,
+                    Department = e.Department,
+                    Position = e.Position,
+                    Email = e.Email,
+                    Phone = e.Phone,
+                    HireDate = e.HireDate,
+                    AddedBy = _context.UserLists
+                        .Where(u => u.UserId == e.AddedBy)
+                        .Select(u => u.EmailAddress)
+                        .FirstOrDefault(),
+                    EmpEncId = _protector.Protect(e.EmployeeId.ToString()),
+                })
+                .FirstOrDefault();
+            if (employee == null)
+            {
+                return NotFound("Employee not found");
+            }
+            return View(employee);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditEmployee(EmployeeViewModel em)
+        {
+            //return Json(em);
+            try
+            {
+                var empEmail = _context.Employees.Where(x => x.Email == em.Email && x.EmployeeId != em.EmployeeId).FirstOrDefault();
+                if (empEmail != null)
+                {
+                    TempData["empEmail"] = "Employee already exist with this email!";
+                    return View(em);
+                }
+                var empPhone = _context.Employees.Where(x => x.Phone == em.Phone && x.EmployeeId != em.EmployeeId).FirstOrDefault();
+                if (empPhone != null)
+                {
+                    TempData["empPhone"] = "Employee already exist with this Phone!";
+                    return View(em);
+                }
+                var employee = await _context.Employees.FindAsync(em.EmployeeId);
+                if (employee == null)
+                {
+                    return NotFound("Employee not found");
+                }
+                employee.FirstName = em.FirstName;
+                employee.MiddleName = em.MiddleName;
+                employee.LastName = em.LastName;
+                employee.Email = em.Email;
+                employee.Phone = em.Phone;
+                employee.Department = em.Department;
+                employee.Position = em.Position;
+                employee.HireDate = em.HireDate;
+
+                //return Json(employee);
+                _context.Update(employee);
+                await _context.SaveChangesAsync();
+                TempData["EditSuccess"] = "Employee updated successfully!";
+                return RedirectToAction("Index", "Employee");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An error occurred while updating the employee.");
+                return View(em);
+            }
+        }
+
+
+ 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteEmployee(string empEncId)
+        {
+            short employeeId = Convert.ToInt16(_protector.Unprotect(empEncId));
+
+            var employee = await _context.Employees.FindAsync(employeeId);
+            if (employee != null)
+            {
+                _context.Employees.Remove(employee);
+                await _context.SaveChangesAsync();
+                TempData["DeleteMessage"] = "Employee record deleted successfully!";
+                return RedirectToAction("Index", "Employee");
+            }
+
+            return RedirectToAction("TenderPage", "PublisherTender");
+        }
 
         [HttpGet]
         public IActionResult EmployeeDetails(string empEncId)

@@ -1,0 +1,344 @@
+﻿@model LiseWoreEmp.Models.ViewModel.EmployeeViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Edit Employee";
+}
+
+<style>
+    .form-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border: none;
+    }
+
+    .section-header {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-bottom: 1px solid #dee2e6;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .section-title {
+        color: #495057;
+        font-weight: 600;
+        margin: 0;
+        font-size: 1.2rem;
+    }
+
+    .section-icon {
+        color: #667eea;
+        margin-right: 0.75rem;
+    }
+
+    .form-body {
+        padding: 2rem;
+    }
+
+    .form-label {
+        color: #495057;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+    .input-group-text {
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-right: none;
+        color: #667eea;
+    }
+
+    .input-group .form-control {
+        border-left: none;
+    }
+
+    .input-group:focus-within .input-group-text {
+        border-color: #667eea;
+        background: #f8f9fa;
+    }
+
+    .text-danger {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 1rem 2rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: white;
+    }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+            color: white;
+        }
+
+    .btn-cancel {
+        background: #6c757d;
+        border: none;
+        border-radius: 8px;
+        padding: 1rem 2rem;
+        font-weight: 600;
+        color: white;
+    }
+
+        .btn-cancel:hover {
+            background: #5a6268;
+            color: white;
+        }
+
+    .validation-summary {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+    }
+
+    .breadcrumb-custom {
+        background: transparent;
+        padding: 1rem 0;
+        margin-bottom: 1rem;
+    }
+
+        .breadcrumb-custom .breadcrumb-item a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .breadcrumb-custom .breadcrumb-item.active {
+            color: #6c757d;
+        }
+</style>
+
+<div class="container-fluid">
+    <div class="form-container"
+
+        <!-- Page Header -->
+        <div class="page-header text-center">
+            <h1 class="mb-2">
+                <i class="fas fa-user-plus me-3"></i>Add New Employee
+            </h1>
+            <p class="mb-0 opacity-75">Fill in the employee information below</p>
+        </div>
+
+        <!-- Validation Summary -->
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <!-- Add Employee Form -->
+        <form asp-action="EditEmployee" asp-controller="Employee" method="post">
+            <input asp-for="EmployeeId" type="hidden" value="@Model.EmployeeId" />
+            <input asp-for="AddedBy" type="hidden" value="@Model.AddedBy" />
+            <!-- Basic Information Section -->
+            <div class="card form-card mb-4">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-user section-icon"></i>Basic Information
+                    </h3>
+                </div>
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FirstName" class="form-label">
+                                <i class="fas fa-user me-2"></i>First Name <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <input asp-for="FirstName" type="text" class="form-control"
+                                       placeholder="Enter first name" required>
+                            </div>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MiddleName" class="form-label">
+                                <i class="fas fa-user me-2"></i>Middle Name
+                            </label>
+                            <input asp-for="MiddleName" type="text" class="form-control"
+                                   placeholder="Enter middle name (optional)">
+                            <span asp-validation-for="MiddleName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="LastName" class="form-label">
+                                <i class="fas fa-user me-2"></i>Last Name <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="LastName" type="text" class="form-control"
+                                   placeholder="Enter last name" required>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Phone" class="form-label">
+                                <i class="fas fa-phone me-2"></i>Phone Number <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                                <input asp-for="Phone" type="text" class="form-control"
+                                       placeholder="Enter phone number" required>
+                            </div>
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Details Section -->
+            <div class="card form-card mb-4">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-briefcase section-icon"></i>Job Details
+                    </h3>
+                </div>
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Department" class="form-label">
+                                <i class="fas fa-building me-2"></i>Department <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-building"></i>
+                                </span>
+                                <input asp-for="Department" type="text" class="form-control"
+                                       placeholder="Enter department" required>
+                            </div>
+                            <span asp-validation-for="Department" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Position" class="form-label">
+                                <i class="fas fa-user-tie me-2"></i>Position <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user-tie"></i>
+                                </span>
+                                <input asp-for="Position" type="text" class="form-control"
+                                       placeholder="Enter position" required>
+                            </div>
+                            <span asp-validation-for="Position" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Email" class="form-label">
+                                <i class="fas fa-envelope me-2"></i>Email Address <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <input asp-for="Email" type="email" class="form-control"
+                                       placeholder="Enter email address" required>
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="HireDate" class="form-label">
+                                <i class="fas fa-calendar-alt me-2"></i>Hire Date <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </span>
+                                <input asp-for="HireDate" type="date" class="form-control" required>
+                            </div>
+                            <span asp-validation-for="HireDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="card form-card">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a asp-action="Index" asp-controller="Employee" class="btn btn-cancel w-100">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-submit w-100">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+            // Toastr configuration
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        $(document).ready(function () {
+            @if (TempData["empEmail"] != null)
+            {
+                    <text>toastr.warning('@TempData["empEmail"]', 'Warning');</text>
+            }
+
+        });
+
+        $(document).ready(function () {
+            @if (TempData["empPhone"] != null)
+            {
+                        <text>toastr.warning('@TempData["empPhone"]', 'Warning');</text>
+            }
+
+        });
+    </script>
+</div>

@@ -342,12 +342,12 @@
             <div class="action-buttons">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <a href="@Url.Action("Index", "Employee")" class="btn btn-back">
+                        <a asp-action="Index" asp-controller="Employee" class="btn btn-back">
                             <i class="fas fa-arrow-left me-2"></i>Back to List
                         </a>
                     </div>
                     <div>
-                        <a href="@Url.Action("Edit", "Employee", new { id = Model.EmpEncId })" class="btn btn-edit">
+                        <a asp-action="EditEmployee" asp-controller="Employee" asp-route-empEncId="@Model.EmpEncId" class="btn btn-edit">
                             <i class="fas fa-edit me-2"></i>Edit Employee
                         </a>
                     </div>
